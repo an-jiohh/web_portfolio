@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const dotenv = require("dotenv");
 dotenv.config(); //메소드는 모듈이 .env에서 접근할 수 있도록 해줌
+const cors = require("cors");
 
 const app = express();
 
@@ -22,7 +23,9 @@ app.set("view engine", "ejs");
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 app.use(express.static(path.join(__dirname, "/src/public")));
+app.use(express.static(path.join(__dirname, "../react/build")));
 app.use("/", indexRouter);
 // 404 처리 미들웨어
 app.use(function (req, res, next) {
